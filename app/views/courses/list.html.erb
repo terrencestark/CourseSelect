@@ -32,20 +32,40 @@
 
             <% @course.each do |course| %>
                 <tr>
-
+                  <% if course.conflict==true %>
+                  <td class="text-danger"><%= course.course_code %></td>
+                  <td class="text-danger"><%= course.name %></td>
+                  <td class="text-danger"><%= course.credit %></td>
+                  <td class="text-danger"><%= course.limit_num %></td>
+                  <td class="text-danger"><%= course.student_num %></td>
+                  <td class="text-danger"><%= course.course_type %></td>
+                  <td class="text-danger"><%= course.teaching_type %></td>
+                  <td class="text-danger"><%= course.exam_type %></td>
+                  <td class="text-danger"><%= course.teacher.name %></td>
+                  <td class="text-danger"><%= course.isopen %></td>
+                  <td title="该课程与已选课程冲突，无法选课"><%= link_to "加入课程", nil, class: 'btn-sm btn-danger disabled' %></td>
+                  <% else %>
                   <td><%= course.course_code %></td>
                   <td><%= course.name %></td>
                   <td><%= course.credit %></td>
                   <td><%= course.limit_num %></td>
+                  <% if course.student_num < course.limit_num%>
                   <td><%= course.student_num %></td>
+                  <% else %>
+                  <td class="text-danger"><%= course.student_num %></td>
+                  <% end %>
                   <td><%= course.course_type %></td>
                   <td><%= course.teaching_type %></td>
                   <td><%= course.exam_type %></td>
                   <td><%= course.teacher.name %></td>
                   <!-- ts add -->
                   <td><%= course.isopen %></td>
+                  <% if course.student_num < course.limit_num%>
                   <td><%= link_to "加入课程", select_course_path(course), class: 'btn-sm btn-info' %></td>
-
+                  <% else %>
+                  <td title="该课程达到限选人数，无法选课"><%= link_to "加入课程", nil, class: 'btn-sm btn-default disabled' %></td>
+                  <% end %>
+                  <% end %>
                 </tr>
             <% end %>
             </tbody>

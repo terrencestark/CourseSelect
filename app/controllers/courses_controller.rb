@@ -62,11 +62,32 @@ class CoursesController < ApplicationController
     @course=Course.where(isopen: true)
     @course=@course-current_user.courses
     # ts add
+    @course.each do |course0|
+      course0_week = get_week_bool_matrix(course0.course_week)
+      course0_time = get_time_bool_matrix(course0.course_time)
+      current_user.courses.each do |course1|
+        course1_week = get_week_bool_matrix(course1.course_week)
+        if if_has_same_week(course0_week,course1_week)==true
+          course1_time = get_time_bool_matrix(course1.course_time)
+          if if_has_same_time(course0_time,course1_time)==true
+            course0.conflict=true
+            course0.save
+            break
+          else
+            course0.conflict=false
+            course0.save
+          end
+        end
+      end
+    end
+    
   end
 
   def select
     @course=Course.find_by_id(params[:id])
     current_user.courses<<@course
+    @course.student_num +=1
+    @course.save
     flash={:suceess => "成功选择课程: #{@course.name}"}
     redirect_to courses_path, flash: flash
   end
@@ -74,6 +95,8 @@ class CoursesController < ApplicationController
   def quit
     @course=Course.find_by_id(params[:id])
     current_user.courses.delete(@course)
+    @course.student_num -=1
+    @course.save
     flash={:success => "成功退选课程: #{@course.name}"}
     redirect_to courses_path, flash: flash
   end

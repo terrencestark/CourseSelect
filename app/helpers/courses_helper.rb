@@ -1,4 +1,36 @@
 module CoursesHelper
+    def get_week_bool_matrix(str_time)     #将课程的上课周数替换成数组
+      arr=Array.new
+      reg = /((\d\d?)-(\d\d?))(.(\d\d?)-(\d\d?))?/
+      md = reg.match(str_time)
+      for i in md[2].to_i..md[3].to_i
+      arr[i]=i
+      end
+      if md[4]!=nil
+        for i in md[5].to_i..md[6].to_i
+        arr[i]=i
+        end
+      end
+      arr
+    end
+    
+    def if_has_same_week(week_bool_matrix1,week_bool_matrix2) #判断两个课程是否有重叠的周数
+      for i in 1..22
+        if week_bool_matrix1[i]==week_bool_matrix2[i]&&week_bool_matrix1[i]!=nil
+          return true
+        end
+      end
+    end
+    
+    def if_has_same_time(time_bool_matrix1,time_bool_matrix2) #判断两个课程是否有重叠的上课时间
+      for i in 1..7
+        for j in 1..11
+          if time_bool_matrix1[i][j]==time_bool_matrix2[i][j]&&time_bool_matrix1[i][j]==true
+            return true
+          end
+        end
+      end
+    end
     # index 0 not use!
     def get_time_bool_matrix(str_time)
       reg = /(周)(一|二|三|四|五|六|日)\((\d\d?)-(\d\d?)/
