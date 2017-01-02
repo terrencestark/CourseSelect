@@ -71,10 +71,12 @@ class CoursesController < ApplicationController
           course1_time = get_time_bool_matrix(course1.course_time)
           if if_has_same_time(course0_time,course1_time)==true
             course0.conflict=true
+            course0.conflict_course=course1.name
             course0.save
             break
           else
             course0.conflict=false
+            course0.conflict_course=""
             course0.save
           end
         end

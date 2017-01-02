@@ -32,7 +32,7 @@
 
             <% @course.each do |course| %>
                 <tr>
-                  <% if course.conflict==true %>
+                  <% if course.conflict == true %>
                   <td class="text-danger"><%= course.course_code %></td>
                   <td class="text-danger"><%= course.name %></td>
                   <td class="text-danger"><%= course.credit %></td>
@@ -43,7 +43,7 @@
                   <td class="text-danger"><%= course.exam_type %></td>
                   <td class="text-danger"><%= course.teacher.name %></td>
                   <td class="text-danger"><%= course.isopen %></td>
-                  <td title="该课程与已选课程冲突，无法选课"><%= link_to "加入课程", nil, class: 'btn-sm btn-danger disabled' %></td>
+                  <td title="该课程与<%= course.conflict_course %>冲突，无法选课"><%= link_to "加入课程", nil, class: 'btn-sm btn-danger disabled' %></td>
                   <% else %>
                   <td><%= course.course_code %></td>
                   <td><%= course.name %></td>
