@@ -37,7 +37,7 @@
         <% if student_logged_in? %>
             <li class="list-group-item">
               <%= link_to list_courses_path do %>
-                  <span class="glyphicon glyphicon-chevron-right"></span> 选修课程
+                  <span class="glyphicon glyphicon-chevron-right"></span> 可选课程
                   <!-- TS add -->
                   <% @courses = Course.all %>
                   <% @selectable_num = 0 %>
