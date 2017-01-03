@@ -71,7 +71,7 @@ class CoursesController < ApplicationController
   def list
     @course=Course.where(isopen: true)
     unless params[:query].blank?
-     @course=Course.where(isopen: true).where( 'name  LIKE :search OR course_code LIKE :search OR course_type LIKE :search OR teaching_type LIKE :search OR exam_type LIKE :search OR teacher.name LIKE :search', search:"%#{params[:query]}%")
+     @course=Course.where(isopen: true).where( 'name  LIKE :search OR course_code LIKE :search OR course_type LIKE :search OR teaching_type LIKE :search OR exam_type LIKE :search', search:"%#{params[:query]}%")
     end
     @course=@course-current_user.courses
   end
