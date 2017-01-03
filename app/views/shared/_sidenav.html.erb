@@ -113,10 +113,11 @@
   
   <% if student_logged_in? %>
   <% 
+    @course_s = current_user.courses
     s_score=0
     s_xuewei=0
     flag=false
-    @course.each do |course|
+    @course_s.each do |course|
       flag=false
       if course.course_type=="专业核心课" or course.course_type=="一级学科核心课"
         flag=true
