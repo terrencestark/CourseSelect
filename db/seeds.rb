@@ -126,12 +126,14 @@ course_map={
 
 teacher_map.keys.each do |index|
   teacher=User.create!(
-      name: teacher_map[index][:name],
-      email: "teacher#{index}@test.com",
-      department: teacher_map[index][:department],
-      password: "password",
-      password_confirmation: "password",
-      teacher: true
+    name: teacher_map[index][:name],
+    email: "teacher#{index}@test.com",
+    department: teacher_map[index][:department],
+    password: "password",
+    password_confirmation: "password",
+    teacher: true,
+    activated: true,
+    activated_at: Time.zone.now
   )
 
   teacher.teaching_courses.create!(
@@ -147,57 +149,23 @@ teacher_map.keys.each do |index|
       exam_type: course_map[index][:exam_type],
       isopen: course_map[index][:isopen]
   )
-
 end
 
 (1..200).each do |index|
   student=User.create!(
-      name: StudentGenerator.name,
-      email: "student#{index}@test.com",
-      num: "2016#{Faker::Number.number(11)}",
-      major: StudentGenerator.major,
-      department: StudentGenerator.department,
-      password: "password",
-      password_confirmation: "password",
+    name: StudentGenerator.name,
+    email: "student#{index}@test.com",
+    num: "2016#{Faker::Number.number(11)}",
+    major: StudentGenerator.major,
+    department: StudentGenerator.department,
+    password: "password",
+    password_confirmation: "password",
+    activated: true,
+    activated_at: Time.zone.now
   )
 
   course_array=(1..34).to_a.sort { rand() - 0.5 }[1..rand(4..8)]
   course_array.each do |index|
-    student.courses<<Course.find(index)
+    student.courses << Course.find(index)
   end
-
-User.create!(name: "Example User",
-    email: "example@railstutorial.org",
-    password: "foobar",
-    password_confirmation: "foobar",
-    admin: true,
-    activated: true,
-    activated_at: Time.zone.now)
-    99.times do |n|
-    name = Faker::Name.name
-    email = "example-#{n+1}@railstutorial.org"
-    password = "password"
-User.create!(name: name,
-    email: email,
-    password: password,
-    password_confirmation: password,
-    activated: true,
-    activated_at: Time.zone.now)
 end
-end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

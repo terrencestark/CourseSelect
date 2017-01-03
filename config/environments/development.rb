@@ -2,7 +2,7 @@ Rails.application.configure do
   
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :test
-   host = 'https://project103-white-shirt.cs50.io/'
+   host = 'https://ase-course-system-terrences.cs50.io/'
   config.action_mailer.default_url_options = { host: host }
   # Settings specified here will take precedence over those in config/application.rb.
 
