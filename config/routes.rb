@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     end
     collection do
       get :list
+      post :list
       get :show_courses_table
     end
   end

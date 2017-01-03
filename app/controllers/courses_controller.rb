@@ -83,6 +83,18 @@ class CoursesController < ApplicationController
       end
     end
     
+    post_para = params[:course_search]
+    if post_para!=nil
+      @result = Array.new(0)
+      search_key = post_para["key"]
+      reg = /#{search_key}/
+      @course.collect do |c|
+        if c.name =~ reg
+          @result.push(c)
+        end
+      end
+      @course = @result
+    end
   end
 
   def select
