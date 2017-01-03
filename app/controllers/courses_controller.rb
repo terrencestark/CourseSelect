@@ -64,12 +64,15 @@ class CoursesController < ApplicationController
     # ts add
 #  end
  
-# mao changed #2 for searching
+# mao changed #2 for searching    Question.where(:content.like => '%farming%')    Question.where(:content =~ '%farming%')  "%#{query}%"
+# Question.where(Question.arel_table[:content].matches("%#{string}%"))
+# House.where('community LIKE :search OR street LIKE :search OR floor LIKE :search OR room_shape LIKE :search', search: "%#{query}%")
+     
   def list
     @course=Course.where(isopen: true)
-   unless params[:query].blank?
-     @course=Course.where(isopen: true).where( "name=?", params[:query])
-   end
+    unless params[:query].blank?
+     @course=Course.where(isopen: true).where( 'name  LIKE :search OR course_code LIKE :search OR course_type LIKE :search OR teaching_type LIKE :search OR exam_type LIKE :search OR teacher.name LIKE :search', search:"%#{params[:query]}%")
+    end
     @course=@course-current_user.courses
   end
 # mao changed #2 for searching
