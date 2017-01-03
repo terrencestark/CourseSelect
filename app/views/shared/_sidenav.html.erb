@@ -110,4 +110,60 @@
       </div>
     </div>
   </div>
+  
+  <% if student_logged_in? %>
+  <% 
+    s_score=0
+    s_xuewei=0
+    flag=false
+    @course.each do |course|
+      flag=false
+      if course.course_type=="专业核心课" or course.course_type=="一级学科核心课"
+        flag=true
+      end
+        c=course.credit.split("/")
+        s_score =s_score + c[1].to_f
+      if flag==true
+        s_xuewei=s_xuewei+c[1].to_f
+      end
+    end
+  %>
+  
+  <div class="panel panel-default">
+	<table class="table">
+		<caption>学分统计</caption>
+		<thead>
+			<tr>
+				<th>总学分</th>
+				<th><%= s_score %></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<th>学位课</th>
+				<th><%= s_xuewei %></th>
+			</tr>
+			<tr>
+				<td>公共必修课</td>
+				<td>0</td>
+			</tr>
+			<tr>
+				<td>专业学位课</td>
+				<td>0</td>
+			</tr>
+			<tr>
+				<th>非学位课</th>
+				<th><%= s_score-s_xuewei %></th>
+			<tr>
+				<td>公共必修课</td>
+				<td>0</td>
+			</tr>
+			<tr>
+				<td>专业学位课</td>
+				<td>0</td>
+			</tr>
+		</tbody>
+  </table>
+  </div> 
+  <% end %>
 </div>

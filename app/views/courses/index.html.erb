@@ -12,8 +12,30 @@
           <% if teacher_logged_in? %><h3 class="panel-title">授课列表</h3><% end %>
           <% if student_logged_in? %><h3 class="panel-title">已选课程</h3><% end %>
         </div>
-
+        
         <div class="panel-body">
+          <% if student_logged_in? %>
+            <% 
+              s_score=0
+              s_xuewei=0
+              flag=false
+              @course.each do |course|
+                flag=false
+                if course.course_type=="专业核心课" or course.course_type=="一级学科核心课"
+                  flag=true
+                end
+                  c=course.credit.split("/")
+                  s_score =s_score + c[1].to_f
+                if flag==true
+                  s_xuewei=s_xuewei+c[1].to_f
+                end
+              end
+            %>
+              <h4 align="right" class="panel-title">已选的总学分<%= s_score %></h4> 
+              <h4 align="right" class="panel-title">学位课<%= s_xuewei %></h4>   
+              <h4 align="right" class="panel-title">非学位<%= s_score-s_xuewei %></4>
+          <% end %>
+          
           <table class="table table-responsive table-condensed table-hover">
             <thead>
             <tr>
@@ -49,7 +71,6 @@
             <% end %>
             </tbody>
           </table>
-
         </div>
       </div>
     </div>
