@@ -58,11 +58,21 @@ class CoursesController < ApplicationController
 
   #-------------------------for students----------------------
 
+#  def list
+#    @course=Course.where(isopen: true)
+#    @course=@course-current_user.courses
+    # ts add
+#  end
+ 
+# mao changed #2 for searching
   def list
     @course=Course.where(isopen: true)
+   unless params[:query].blank?
+     @course=Course.where(isopen: true).where( "name=?", params[:query])
+   end
     @course=@course-current_user.courses
-    # ts add
   end
+# mao changed #2 for searching
 
   def select
     @course=Course.find_by_id(params[:id])
@@ -77,6 +87,8 @@ class CoursesController < ApplicationController
     flash={:success => "成功退选课程: #{@course.name}"}
     redirect_to courses_path, flash: flash
   end
+
+
 
   def show_courses_table
     @ts_courses = current_user.courses
