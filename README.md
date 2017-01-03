@@ -46,8 +46,7 @@
 使用前需要安装Bundler，Gem，Ruby，Rails等依赖环境。
 
 请根据本地系统下载安装[postgresql](https://devcenter.heroku.com/articles/heroku-postgresql#local-setup)数据库，并运行`psql -h localhost`检查安装情况。
-
-
+####
 ## 安装
 
 在终端（MacOS或Linux）中执行以下代码
@@ -56,11 +55,16 @@
 $ git clone https://github.com/PENGZhaoqing/CourseSelect
 $ cd CourseSelect
 $ bundle install
+sudo service postgresql start
 $ rake db:migrate
 $ rake db:seed
-$ rails s 
+$ rails s
+git init
+git add .
+git commit -m""
+git remote add origin 机上你所创建项目的版本库名称（如果提示fatal：remote origin already exists。先输入 git remote rm origin,再重复第四部）
+git push origin master
 ```
-
 在浏览器中输入`localhost:3000`访问主页
 
 ##使用
