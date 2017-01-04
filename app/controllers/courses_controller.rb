@@ -59,13 +59,13 @@ class CoursesController < ApplicationController
   #-------------------------for students----------------------
 
   def list
-    # mao added
+  # mao changed #2 for searching  
     @course=Course.where(isopen: true)
     unless params[:query].blank?
      @course=Course.where(isopen: true).where( 'name  LIKE :search OR course_code LIKE :search OR course_type LIKE :search OR teaching_type LIKE :search OR exam_type LIKE :search', search:"%#{params[:query]}%")
     end
     @course=@course-current_user.courses
-
+  # mao changed #2 for searching  
     # ts add
     @course.each do |course0|
       course0_week = get_week_bool_matrix(course0.course_week)
