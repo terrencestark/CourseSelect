@@ -87,7 +87,7 @@ class CoursesController < ApplicationController
         end
       end
     end
-  end
+  end    # mao added 1 "end" to make 5 "end"s here totally
     
 
 
