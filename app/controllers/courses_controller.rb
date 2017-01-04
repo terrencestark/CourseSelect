@@ -59,8 +59,13 @@ class CoursesController < ApplicationController
   #-------------------------for students----------------------
 
   def list
+    # mao added
     @course=Course.where(isopen: true)
+    unless params[:query].blank?
+     @course=Course.where(isopen: true).where( 'name  LIKE :search OR course_code LIKE :search OR course_type LIKE :search OR teaching_type LIKE :search OR exam_type LIKE :search', search:"%#{params[:query]}%")
+    end
     @course=@course-current_user.courses
+
     # ts add
     @course.each do |course0|
       course0_week = get_week_bool_matrix(course0.course_week)
@@ -82,20 +87,9 @@ class CoursesController < ApplicationController
         end
       end
     end
-    
-    post_para = params[:course_search]
-    if post_para!=nil
-      @result = Array.new(0)
-      search_key = post_para["key"]
-      reg = /#{search_key}/
-      @course.collect do |c|
-        if c.name =~ reg
-          @result.push(c)
-        end
-      end
-      @course = @result
-    end
   end
+    
+
 
   def select
     @course=Course.find_by_id(params[:id])
@@ -161,6 +155,5 @@ class CoursesController < ApplicationController
     params.require(:course).permit(:course_code, :name, :course_type, :teaching_type, :exam_type,
                                    :credit, :limit_num, :class_room, :course_time, :course_week)
   end
-
-
+  
 end
