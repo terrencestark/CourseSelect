@@ -20,6 +20,10 @@
               </div>
             </div>
         <% end %>
+        <% if @courses_number > -1 %>
+          <p></p>
+          <p>检索到课程数: <%= @courses_number %></p>
+        <% end %>
 <!--mao added #1 for searching-->
           <table class="table table-striped table-hover">
             <thead>
