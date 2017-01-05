@@ -24,6 +24,12 @@
             </tr>
             </thead>
             <tbody>
+              <% 
+                bg_color=['bgcolor=#98FB98','bgcolor=#87CEFA','bgcolor=#DDA0DD',
+                          'bgcolor=#FFFACD','bgcolor=#FFDEAD','bgcolor=#CD853F',
+                          'bgcolor=#FA8072','bgcolor=#FFFACD','bgcolor=#D2B48C']
+                course_names = []  # save names of courses in course table, for color funciotn
+              %>
               <% class_num = 1 %>
               <% @course_matrix.each do |class_line|  %>
                 <tr>
@@ -33,16 +39,29 @@
                   <% for i in 1..7 %>
                     <% str = "" %>
                     <% c_arr = class_line[i] %>
-                    <td>
+                    <% if c_arr.length==0 %>
+                      <td></td>
+                    <% else %>
                       <% cnt = 1 %>
                       <% c_arr.each do |course| %>
-                        <%= course %>
-                        <% if cnt < c_arr.length %>
-                          <br>
-                        <% end %>
-                        <% cnt += 1 %>
+                        <% 
+                          cname_index = course_names.index(course)
+                          if cname_index == nil
+                            course_names.push(course)
+                          end
+                          cname_index = course_names.index(course)
+                        %>
+                        <% if cnt==1  %>
+                          <td <%= bg_color[cname_index % bg_color.length] %> >
+                        <% end %> 
+                          <%= course %>
+                          <% if cnt < c_arr.length %>
+                            <br>
+                          <% end %>
+                          <% cnt += 1 %>
                       <% end %>
-                    </td>
+                      </td>
+                    <% end %>
                   <% end %>
               <% class_num += 1 %>
               <% end %>
